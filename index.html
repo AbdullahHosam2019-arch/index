@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ترقيات دار العلوم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0d7d6b;
+      --primary-light: #e6f5f2;
+      --primary-mid: #4db6a4;
+      --secondary: #1a4a5e;
+      --accent: #e07b00;
+      --accent-light: #fff3e0;
+      --bg: #f5f8fa;
+      --surface: #ffffff;
+      --surface-2: #f0f4f6;
+      --border: #d5e1e7;
+      --text: #1a2733;
+      --text-muted: #607a88;
+      --danger: #c0392b;
+      --danger-light: #fdf2f2;
+      --success: #1a7a4a;
+      --success-light: #f0faf4;
+      --warning: #b7860b;
+      --warning-light: #fffdf0;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 2px 10px rgba(13,125,107,0.08);
+      --shadow-md: 0 4px 20px rgba(13,125,107,0.13);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+    /* ===== HEADER ===== */
+    .app-header {
+      background: linear-gradient(135deg, #1a4a5e 0%, #0d7d6b 100%);
+      color: white;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 3px 18px rgba(0,0,0,0.18);
+    }
+    .app-logo { display: flex; align-items: center; gap: 14px; }
+    .app-logo-icon {
+      width: 50px; height: 50px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+    }
+    .app-logo-text h1 { font-size: 21px; font-weight: 900; }
+    .app-logo-text p { font-size: 12px; opacity: .75; }
+    .header-meta { font-size: 12px; opacity: .7; text-align: left; line-height: 1.6; }
+    /* ===== PROGRESS ===== */
+    .progress-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .progress-steps {
+      display: flex; max-width: 820px; margin: 0 auto;
+    }
+    .step {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      padding: 16px 12px; cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all .25s; gap: 5px;
+    }
+    .step.active { border-bottom-color: var(--primary); }
+    .step.completed { border-bottom-color: var(--primary-mid); }
+    .step-num {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--surface-2); color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; transition: all .25s;
+    }
+    .step.active .step-num { background: var(--primary); color: #fff; }
+    .step.completed .step-num { background: var(--primary-light); color: var(--primary); }
+    .step-lbl { font-size: 12.5px; font-weight: 700; color: var(--text-muted); text-align: center; }
+    .step.active .step-lbl { color: var(--primary); }
+    .step.completed .step-lbl { color: var(--primary-mid); }
+    /* ===== LAYOUT ===== */
+    .main { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+    .page { display: none; animation: fadeUp .3s ease; }
+    .page.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    /* ===== CARD ===== */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 26px 28px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+    .card-head {
+      margin-bottom: 22px; padding-bottom: 14px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+    .card-title {
+      font-size: 16px; font-weight: 800; color: var(--secondary);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center; font-size: 17px;
+    }
+    .card-sub { font-size: 12.5px; color: var(--text-muted); margin-top: 4px; }
+    /* ===== FORMS ===== */
+    .fg2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .fg3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .full { grid-column: 1 / -1; }
+    .fg { display: flex; flex-direction: column; gap: 5px; }
+    .lbl { font-size: 13px; font-weight: 700; color: var(--text); }
+    .req { color: var(--danger); margin-right: 2px; }
+    .hint { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+    input[type="text"], input[type="number"], select, textarea {
+      width: 100%; padding: 10px 13px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      font-family: 'Cairo', sans-serif; font-size: 13.5px;
+      color: var(--text); background: var(--surface);
+      transition: border-color .2s, box-shadow .2s; direction: rtl;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(13,125,107,.1);
+    }
+    textarea { resize: vertical; min-height: 70px; }
+    select { cursor: pointer; }
+    /* ===== RADIO ===== */
+    .rg { display: flex; gap: 10px; flex-wrap: wrap; }
+    .ro {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 15px; border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer;
+      transition: all .2s; font-size: 13.5px; user-select: none;
+    }
+    .ro:hover { border-color: var(--primary-mid); background: var(--primary-light); }
+    .ro.sel { border-color: var(--primary); background: var(--primary-light); color: var(--primary); font-weight: 700; }
+    .ro input[type="radio"] { width: auto; accent-color: var(--primary); }
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 22px; border-radius: var(--radius-sm);
+      font-family: 'Cairo', sans-serif; font-size: 13.5px;
+      font-weight: 800; cursor: pointer; border: none; transition: all .2s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: #0a6a5a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(13,125,107,.3); }
+    .btn-secondary { background: var(--surface-2); color: var(--text); border: 1.5px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); }
+    .btn-danger { background: var(--danger-light); color: var(--danger); border: 1.5px solid #f5c6c6; }
+    .btn-danger:hover { background: #fad7d7; }
+    .btn-lg { padding: 13px 30px; font-size: 15px; }
+    .btn-sm { padding: 6px 13px; font-size: 12px; }
+    /* ===== NAV ===== */
+    .pnav { display: flex; justify-content: space-between; align-items: center; margin-top: 26px; }
+    /* ===== INFO BOXES ===== */
+    .ibox {
+      display: flex; gap: 10px; padding: 13px 15px;
+      border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 18px;
+    }
+    .ibox-info  { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e3a8a; }
+    .ibox-warn  { background: var(--warning-light); border: 1px solid #fde68a; color: #78350f; }
+    .ibox-icon  { font-size: 17px; flex-shrink: 0; }
+    /* ===== ALERT ===== */
+    .alert {
+      padding: 12px 15px; border-radius: var(--radius-sm); font-size: 13px;
+      margin-bottom: 14px; display: flex; gap: 8px; align-items: flex-start;
+    }
+    .alert-err { background: var(--danger-light); border: 1px solid #f5c6c6; color: var(--danger); }
+    /* ===== PAGE TITLE ===== */
+    .ptitle { margin-bottom: 22px; }
+    .ptitle h2 { font-size: 21px; font-weight: 900; color: var(--secondary); }
+    .ptitle p { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
+    /* ===== RESEARCH ITEM ===== */
+    .ri {
+      background: var(--surface);
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 14px; overflow: hidden;
+      transition: box-shadow .2s;
+    }
+    .ri:hover { box-shadow: var(--shadow-md); }
+    .ri-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 18px; background: var(--primary-light);
+      cursor: pointer; user-select: none;
+    }
+    .ri-title { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 13.5px; color: var(--secondary); }
+    .ri-body { padding: 20px; border-top: 1px solid var(--border); }
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700;
+    }
+    .b-journal  { background: #e0f2fe; color: #075985; }
+    .b-conf     { background: #fef3c7; color: #92400e; }
+    .b-book     { background: #f3e8ff; color: #7c3aed; }
+    .b-patent   { background: #dcfce7; color: #166534; }
+    .b-other    { background: #f1f5f9; color: #475569; }
+    .unit-badge {
+      font-size: 11.5px; background: var(--primary); color: #fff;
+      padding: 3px 9px; border-radius: 20px; font-weight: 800;
+    }
+    /* ===== ADD BTN ===== */
+    .add-btn {
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      width: 100%; padding: 15px;
+      border: 2px dashed var(--primary-mid); border-radius: var(--radius);
+      color: var(--primary); font-family: 'Cairo', sans-serif;
+      font-size: 13.5px; font-weight: 800; cursor: pointer;
+      background: transparent; transition: all .2s; margin-top: 4px;
+    }
+    .add-btn:hover { background: var(--primary-light); border-style: solid; }
+    /* ===== UNITS DISPLAY ===== */
+    .units-disp {
+      background: var(--primary-light); border-radius: var(--radius-sm);
+      padding: 11px 15px; display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 14px;
+    }
+    .units-disp span:first-child { font-size: 13px; font-weight: 700; color: var(--secondary); }
+    .units-disp span:last-child  { font-size: 20px; font-weight: 900; color: var(--primary); }
+    /* ===== STATS ROW ===== */
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
+    .stat-c {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; text-align: center;
+    }
+    .stat-v { font-size: 26px; font-weight: 900; color: var(--primary); line-height: 1; }
+    .stat-l { font-size: 11.5px; color: var(--text-muted); margin-top: 5px; font-weight: 700; }
+    /* ===== EMPTY STATE ===== */
+    .empty { text-align: center; padding: 36px 20px; color: var(--text-muted); }
+    .empty-icon { font-size: 44px; margin-bottom: 10px; }
+    .empty h3 { font-size: 15px; font-weight: 800; margin-bottom: 5px; color: var(--text); }
+    .empty p { font-size: 13px; }
+    /* ===== RESULTS ===== */
+    .result-hero {
+      text-align: center; padding: 32px 24px;
+      border-radius: var(--radius); margin-bottom: 22px;
+    }
+    .r-eligible    { background: linear-gradient(135deg,#f0fdf4,#dcfce7); border: 2px solid #86efac; }
+    .r-partial     { background: linear-gradient(135deg,#fffbeb,#fef3c7); border: 2px solid #fcd34d; }
+    .r-ineligible  { background: linear-gradient(135deg,#fff5f5,#fed7d7); border: 2px solid #fca5a5; }
+    .rh-icon { font-size: 52px; margin-bottom: 10px; }
+    .rh-title { font-size: 22px; font-weight: 900; margin-bottom: 7px; }
+    .r-eligible  .rh-title { color: var(--success); }
+    .r-partial   .rh-title { color: var(--warning); }
+    .r-ineligible .rh-title { color: var(--danger); }
+    .rh-sub { font-size: 14px; color: var(--text-muted); max-width: 480px; margin: 0 auto; }
+    /* ===== TOTAL SCORE ===== */
+    .total-card {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: #fff; border-radius: var(--radius);
+      padding: 26px; text-align: center; margin-bottom: 18px;
+    }
+    .total-lbl { font-size: 13px; opacity: .8; margin-bottom: 6px; }
+    .total-num { font-size: 54px; font-weight: 900; line-height: 1; }
+    .total-sub { font-size: 15px; opacity: .7; margin-top: 4px; }
+    /* ===== SCORE SECTION ===== */
+    .score-sec {
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--border); padding: 22px; margin-bottom: 18px;
+    }
+    .score-sec h3 {
+      font-size: 15px; font-weight: 800; color: var(--secondary);
+      margin-bottom: 18px; padding-bottom: 11px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+    .si { margin-bottom: 16px; }
+    .si-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+    .si-lbl { font-size: 13.5px; font-weight: 700; }
+    .si-val { font-size: 13.5px; font-weight: 900; }
+    .sbar { height: 7px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+    .sbar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+    .sf-p { background: var(--primary); }
+    .sf-a { background: var(--accent); }
+    .sf-s { background: var(--secondary); }
+    .sf-d { background: var(--danger); }
+    /* ===== CHECK LIST ===== */
+    .chk-list { display: flex; flex-direction: column; gap: 10px; }
+    .chk {
+      display: flex; align-items: flex-start; gap: 11px;
+      padding: 11px 14px; border-radius: var(--radius-sm); font-size: 13.5px;
+    }
+    .chk-pass { background: var(--success-light); border: 1px solid #9ae6b4; }
+    .chk-fail { background: var(--danger-light);  border: 1px solid #f5c6c6; }
+    .chk-warn { background: var(--warning-light); border: 1px solid #fde68a; }
+    .chk-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+    .chk-text strong { display: block; font-weight: 800; margin-bottom: 2px; }
+    .chk-text span   { font-size: 12.5px; color: var(--text-muted); }
+    /* ===== TABLE ===== */
+    .rt { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .rt th {
+      background: var(--primary-light); color: var(--secondary);
+      padding: 9px 12px; text-align: right; font-weight: 800; font-size: 12px;
+    }
+    .rt td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .rt tr:last-child td { border-bottom: none; }
+    .rt tr:hover td { background: var(--surface-2); }
+    /* ===== TOGGLE ===== */
+    .tog { transition: transform .3s; }
+    .col-h .tog { transform: rotate(-90deg); }
+    .coll { overflow: hidden; transition: max-height .3s ease; }
+    .coll.open  { max-height: 2000px; }
+    .coll.close { max-height: 0; }
+    /* ===== NOTE ===== */
+    .note { font-size: 11.5px; color: var(--text-muted); font-style: italic; margin-top: 3px; }
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:640px){
+      .fg2,.fg3 { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .app-header { padding: 14px 16px; }
+      .main { padding: 18px 14px 40px; }
+    }
+    @media print {
+      .app-header,.progress-bar,.pnav,.add-btn,.btn-secondary { display:none!important; }
+      .page { display: block!important; }
+      body { background: #fff; }
+    }
+    /* ===== CONDITIONAL ===== */
+    .show-field { display: block; }
+    .hide-field { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="app-logo">
+    <div class="app-logo-icon">🎓</div>
+    <div class="app-logo-text">
+      <h1>ترقيات دار العلوم</h1>
+      <p>أداة اختبار الأهلية للترقية العلمية</p>
+    </div>
+  </div>
+  <div class="header-meta">القواعد التنفيذية للترقية العلمية<br>جامعة دار العلوم — 2025</div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-bar">
+  <div class="progress-steps">
+    <div class="step active" id="step1" onclick="gotoStep(1)">
+      <div class="step-num">١</div>
+      <div class="step-lbl">بيانات المتقدم</div>
+    </div>
+    <div class="step" id="step2" onclick="gotoStep(2)">
+      <div class="step-num">٢</div>
+      <div class="step-lbl">الإنتاج العلمي</div>
+    </div>
+    <div class="step" id="step3" onclick="gotoStep(3)">
+      <div class="step-num">٣</div>
+      <div class="step-lbl">نتيجة الاختبار</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ============================================================ PAGE 1 -->
+<div class="page active" id="pg1">
+  <div class="ptitle">
+    <h2>بيانات المتقدم للترقية</h2>
+    <p>يرجى تعبئة جميع البيانات بدقة لضمان صحة نتائج الاختبار</p>
+  </div>
+
+  <div class="ibox ibox-info">
+    <span class="ibox-icon">ℹ️</span>
+    <div>تُقيَّم الأهلية بناءً على المواد <strong>(٢٧ – ٣٥)</strong> من القواعد التنفيذية للترقية العلمية في جامعة دار العلوم 2025. هذه الأداة استرشادية تساعدك على التحقق من استيفاء متطلبات الإنتاج العلمي قبل تقديم طلبك الرسمي.</div>
+  </div>
+
+  <!-- Personal -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title"><div class="card-icon">👤</div>المعلومات الشخصية والوظيفية</div>
+    </div>
+    <div class="fg2" style="gap:16px;">
+      <div class="fg">
+        <label class="lbl">الاسم الكامل <span class="req">*</span></label>
+        <input type="text" id="f-name" placeholder="أدخل اسمك الكامل">
+      </div>
+      <div class="fg">
+        <label class="lbl">القسم العلمي <span class="req">*</span></label>
+        <input type="text" id="f-dept" placeholder="مثال: قسم اللغة العربية">
+      </div>
+      <div class="fg">
+        <label class="lbl">الكلية <span class="req">*</span></label>
+        <input type="text" id="f-college" placeholder="مثال: كلية الآداب والعلوم الإنسانية">
+      </div>
+      <div class="fg">
+        <label class="lbl">التخصص الدقيق <span class="req">*</span></label>
+        <input type="text" id="f-spec" placeholder="مثال: اللغويات التطبيقية">
+      </div>
+    </div>
+  </div>
+
+  <!-- Rank -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title"><div class="card-icon">📋</div>نوع الترقية المطلوبة</div>
+    </div>
+    <div class="fg" style="margin-bottom:16px;">
+      <label class="lbl">الرتبة الحالية <span class="req">*</span></label>
+      <div class="rg" id="rg-rank">
+        <label class="ro" onclick="pickRad(this,'rk')"><input type="radio" name="rk" value="assistant"> أستاذ مشارك</label>
+        <label class="ro" onclick="pickRad(this,'rk')"><input type="radio" name="rk" value="associate"> أستاذ</label>
+      </div>
+    </div>
+    <div class="ibox ibox-info" style="margin-bottom:0;">
+      <span class="ibox-icon">🎯</span>
+      <span id="rank-info-txt">يرجى اختيار الرتبة الحالية لتحديد هدف الترقية</span>
+    </div>
+  </div>
+
+  <!-- Service -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title"><div class="card-icon">📅</div>بيانات الخدمة والمدة الزمنية</div>
+      <div class="card-sub">وفق المادتين الحادية والعشرين والثانية والعشرين</div>
+    </div>
+    <div class="fg3">
+      <div class="fg">
+        <label class="lbl">سنوات الخدمة في الرتبة الحالية <span class="req">*</span></label>
+        <input type="number" id="f-yrank" min="0" max="40" step="0.5" placeholder="مثال: 4">
+        <span class="hint">يُشترط ألا تقل عن 4 سنوات</span>
+      </div>
+      <div class="fg">
+        <label class="lbl">منها في الجامعات السعودية <span class="req">*</span></label>
+        <input type="number" id="f-ysaudi" min="0" max="40" step="0.5" placeholder="مثال: 2">
+        <span class="hint">يُشترط سنة واحدة على الأقل</span>
+      </div>
+      <div class="fg">
+        <label class="lbl">منها في جامعة دار العلوم <span class="req">*</span></label>
+        <input type="number" id="f-ydar" min="0" max="40" step="0.5" placeholder="مثال: 1.5">
+        <span class="hint">يُشترط سنة واحدة على الأقل</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teaching/Service Scores -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title"><div class="card-icon">🏫</div>نقاط التدريس وخدمة الجامعة والمجتمع</div>
+      <div class="card-sub">المادة ٢٧ — الحد الأدنى المطلوب ٢٥ نقطة من مجموع ٤٠ نقطة في المجالين</div>
+    </div>
+    <div class="ibox ibox-info">
+      <span class="ibox-icon">📝</span>
+      <div>يُقيَّم <strong>التدريس</strong> بـ ٢٥ نقطة و<strong>خدمة الجامعة والمجتمع</strong> بـ ١٥ نقطة من رئيس القسم والعميد بصفة سرية. أدخل تقديرك المتوقع استناداً لتقييماتك السابقة.</div>
+    </div>
+    <div class="fg2">
+      <div class="fg">
+        <label class="lbl">نقاط التدريس المتوقعة (من 25) <span class="req">*</span></label>
+        <input type="number" id="f-teach" min="0" max="25" placeholder="مثال: 20">
+        <span class="hint">الحد الأقصى ٢٥ نقطة</span>
+      </div>
+      <div class="fg">
+        <label class="lbl">نقاط خدمة الجامعة والمجتمع (من 15) <span class="req">*</span></label>
+        <input type="number" id="f-serv" min="0" max="15" placeholder="مثال: 12">
+        <span class="hint">الحد الأقصى ١٥ نقطة</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Specialization Type -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title"><div class="card-icon">🔬</div>نوع التخصص</div>
+      <div class="card-sub">يؤثر على قواعد البيانات المقبولة للنشر</div>
+    </div>
+    <div class="fg">
+      <label class="lbl">صنّف تخصصك <span class="req">*</span></label>
+      <div class="rg" id="rg-spec">
+        <label class="ro" onclick="pickRad(this,'sp')"><input type="radio" name="sp" value="sci"> تخصصات علمية وتقنية</label>
+        <label class="ro" onclick="pickRad(this,'sp')"><input type="radio" name="sp" value="hum"> تخصصات إنسانية واجتماعية</label>
+      </div>
+      <span class="hint">التخصصات الإنسانية والاجتماعية يُقبل فيها النشر في أرسيف (ARCIF) مع شروط إضافية</span>
+    </div>
+  </div>
+
+  <div id="pg1-alert"></div>
+  <div class="pnav">
+    <div></div>
+    <button class="btn btn-primary btn-lg" onclick="validateP1()">التالي: الإنتاج العلمي ←</button>
+  </div>
+</div><!-- /pg1 -->
+
+<!-- ============================================================ PAGE 2 -->
+<div class="page" id="pg2">
+  <div class="ptitle">
+    <h2>الإنتاج العلمي</h2>
+    <p>أضف كل إنتاج علمي تودّ تقديمه للترقية بشكل منفصل — تُحتسب الوحدات تلقائياً</p>
+  </div>
+
+  <div class="ibox ibox-info" id="req-info">
+    <span class="ibox-icon">📊</span>
+    <div id="req-text">يرجى اختيار نوع الترقية أولاً.</div>
+  </div>
+
+  <div class="ibox ibox-warn">
+    <span class="ibox-icon">⚠️</span>
+    <div>
+      <strong>تنبيهات جوهرية:</strong>
+      يجب أن يكون الإنتاج العلمي في مجال تخصصك، ومنشوراً أو مقبولاً للنشر أثناء شغلك رتبتك الحالية،
+      وألا يكون مستلاً من رسائل الماجستير أو الدكتوراه أو أعمال سابقة (المادة ٣٥).
+    </div>
+  </div>
+
+  <!-- Items Container -->
+  <div id="items-wrap">
+    <div class="empty" id="empty-st">
+      <div class="empty-icon">📄</div>
+      <h3>لا يوجد إنتاج علمي بعد</h3>
+      <p>اضغط الزر أدناه لإضافة أول إنتاج علمي</p>
+    </div>
+  </div>
+
+  <button class="add-btn" onclick="addItem()">+ إضافة إنتاج علمي جديد</button>
+
+  <!-- Live stats -->
+  <div id="live-stats" style="display:none; margin-top:18px;">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title"><div class="card-icon">📈</div>ملخص الإنتاج المُدخَل</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-c"><div class="stat-v" id="st-n">0</div><div class="stat-l">إجمالي الأعمال</div></div>
+        <div class="stat-c"><div class="stat-v" id="st-u">0.00</div><div class="stat-l">إجمالي الوحدات</div></div>
+        <div class="stat-c"><div class="stat-v" id="st-s">0.00</div><div class="stat-l">وحدات منفردة</div></div>
+        <div class="stat-c"><div class="stat-v" id="st-j">0.00</div><div class="stat-l">وحدات مجلات</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pg2-alert"></div>
+  <div class="pnav">
+    <button class="btn btn-secondary" onclick="gotoStep(1)">→ رجوع</button>
+    <button class="btn btn-primary btn-lg" onclick="validateP2()">عرض النتيجة ←</button>
+  </div>
+</div><!-- /pg2 -->
+
+<!-- ============================================================ PAGE 3 -->
+<div class="page" id="pg3">
+  <div class="ptitle">
+    <h2>نتيجة اختبار الأهلية</h2>
+    <p>بناءً على بياناتك المُدخَلة وأحكام المواد ٢٧–٣٥ من القواعد التنفيذية</p>
+  </div>
+
+  <div id="r-hero"></div>
+  <div class="total-card">
+    <div class="total-lbl">مجموع النقاط التقديري الإجمالي</div>
+    <div class="total-num" id="r-total">—</div>
+    <div class="total-sub">نقطة من أصل 100</div>
+  </div>
+
+  <div class="stats-row" id="r-stats"></div>
+
+  <div class="score-sec">
+    <h3>📊 توزيع النقاط</h3>
+    <div id="r-breakdown"></div>
+  </div>
+
+  <div class="score-sec">
+    <h3>✅ فحص متطلبات الأهلية</h3>
+    <div class="chk-list" id="r-checks"></div>
+  </div>
+
+  <div class="score-sec">
+    <h3>📋 ملخص الإنتاج العلمي المُدخَل</h3>
+    <div id="r-table"></div>
+  </div>
+
+  <div id="r-recs"></div>
+
+  <div class="ibox ibox-warn" style="margin-top:22px;">
+    <span class="ibox-icon">⚠️</span>
+    <div><strong>تنبيه هام:</strong> هذه الأداة للاسترشاد فقط ولا تُغني عن المراجعة الرسمية من أمانة المجلس العلمي. القرار النهائي يصدر من المجلس العلمي بعد التحقق من جميع الوثائق الأصلية وتقارير المحكمين.</div>
+  </div>
+
+  <div class="pnav">
+    <button class="btn btn-secondary" onclick="gotoStep(2)">→ تعديل الإنتاج العلمي</button>
+    <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة النتيجة</button>
+  </div>
+</div><!-- /pg3 -->
+
+</div><!-- /main -->
+
+<script>
+// ================================================================= DATA
+let curStep = 1;
+let items   = [];
+let itemCnt = 0;
+
+const REQS = {
+  associate: {
+    label:'أستاذ', from:'أستاذ مشارك',
+    minUnits:4, minSolo:2, minJournal:1,
+    minSciScore:35, minTotal:60, minServTeach:25, minCountries:2
+  },
+  professor: {
+    label:'أستاذ', from:'أستاذ مشارك',
+    minUnits:6, minSolo:3, minJournal:2,
+    minSciScore:40, minTotal:60, minServTeach:25, minCountries:3
+  }
+};
+
+const TYPES = [
+  {v:'journal',       l:'بحث في مجلة علمية محكمة',           b:'b-journal', icon:'📰', cap:null},
+  {v:'conference',    l:'بحث في مؤتمر أو ندوة علمية متخصصة',  b:'b-conf',   icon:'🎤', cap:1},
+  {v:'res-center',    l:'بحث من مركز بحوث جامعي متخصص',       b:'b-journal', icon:'🔬', cap:null},
+  {v:'book',          l:'كتاب جامعي أو مرجع علمي محكّم',       b:'b-book',   icon:'📚', cap:1},
+  {v:'rare-book',     l:'تحقيق كتاب نادر محكّم',              b:'b-book',   icon:'📖', cap:1},
+  {v:'translation',   l:'ترجمة كتاب علمي متخصص محكّمة',       b:'b-book',   icon:'🌐', cap:1},
+  {v:'sci-body',      l:'كتاب/بحث من هيئة علمية معتمدة',      b:'b-other',  icon:'🏛️', cap:1},
+  {v:'patent',        l:'براءة اختراع / ابتكار',               b:'b-patent', icon:'💡', cap:1},
+  {v:'creative',      l:'نشاط إبداعي متميز',                   b:'b-other',  icon:'🌟', cap:1},
+];
+
+const DBS = [
+  {v:'wos-scie', l:'Web of Science — SCI Expanded',      w:1.3, isWosSCI:true},
+  {v:'wos-ssci', l:'Web of Science — SSCI',              w:1.3, isWosSCI:true},
+  {v:'wos-ahci', l:'Web of Science — A&HCI',             w:1.1, isWosSCI:true},
+  {v:'wos-other',l:'Web of Science — أخرى',              w:1.0, isWosSCI:false},
+  {v:'scopus',   l:'Scopus',                              w:1.0, isWosSCI:false},
+  {v:'medline',  l:'MEDLINE / PubMed',                    w:1.0, isWosSCI:false},
+  {v:'arcif',    l:'أرسيف (ARCIF) — للإنسانيات فقط',     w:0.75,isWosSCI:false},
+  {v:'saudi',    l:'مجلة جامعة سعودية محكمة',             w:0.8, isWosSCI:false},
+  {v:'other',    l:'أخرى (مستوفية للشروط)',               w:0.7, isWosSCI:false},
+];
+
+const AUTH_MAP = {
+  solo:             {l:'منفرد (مؤلف وحيد)',                        u:1.00},
+  'two-co':         {l:'مشترك اثنان (أنا أحدهما)',                 u:0.50},
+  'lead-multi':     {l:'مشترك أكثر من اثنين — الباحث الرئيس',     u:0.50},
+  'co-multi':       {l:'مشترك أكثر من اثنين — مشارك (ليس رئيساً)',u:0.25},
+};
+
+// ================================================================= NAV
+function gotoStep(s) {
+  if (s > curStep) return;
+  curStep = s;
+  renderNav();
+}
+function advance(s) {
+  curStep = s;
+  renderNav();
+}
+function renderNav() {
+  document.querySelectorAll('.page').forEach((p,i)=> p.classList.toggle('active', i+1===curStep));
+  document.querySelectorAll('.step').forEach((st,i)=>{
+    st.classList.remove('active','completed');
+    if (i+1===curStep) st.classList.add('active');
+    if (i+1<curStep)   st.classList.add('completed');
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ================================================================= RADIO
+function pickRad(el, name) {
+  document.querySelectorAll(`[name="${name}"]`).forEach(r => r.closest('.ro').classList.remove('sel'));
+  el.classList.add('sel');
+  if (name==='rk') updateRankInfo();
+}
+function getRad(name) {
+  const c = document.querySelector(`[name="${name}"]:checked`); return c ? c.value : null;
+}
+function getItemRad(name) {
+  const c = document.querySelector(`[name="${name}"]:checked`); return c ? c.value : null;
+}
+function pickItemRad(el, name, id) {
+  document.querySelectorAll(`[name="${name}"]`).forEach(r => r.closest('.ro').classList.remove('sel'));
+  el.classList.add('sel');
+  recompute(id);
+}
+
+function updateRankInfo() {
+  const rk = getRad('rk');
+  const el = document.getElementById('rank-info-txt');
+  if (rk==='assistant') el.innerHTML = '🎯 الترقية المستهدفة: <strong>أستاذ مشارك</strong> — يُشترط الحد الأدنى ٤ وحدات بحثية، منها ٢ منفردة على الأقل';
+  else if (rk==='associate') el.innerHTML = '🎯 الترقية المستهدفة: <strong>أستاذ</strong> — يُشترط الحد الأدنى ٦ وحدات بحثية، منها ٣ منفردة على الأقل';
+}
+function getTarget() {
+  const rk = getRad('rk');
+  return rk==='assistant'?'associate': rk==='associate'?'professor':null;
+}
+
+// ================================================================= VALIDATE P1
+function validateP1() {
+  const errs = [];
+  if (!document.getElementById('f-name').value.trim()) errs.push('الاسم الكامل مطلوب');
+  if (!document.getElementById('f-dept').value.trim()) errs.push('القسم العلمي مطلوب');
+  if (!document.getElementById('f-college').value.trim()) errs.push('الكلية مطلوبة');
+  if (!document.getElementById('f-spec').value.trim()) errs.push('التخصص الدقيق مطلوب');
+  if (!getRad('rk')) errs.push('يرجى اختيار الرتبة الحالية');
+  if (!getRad('sp')) errs.push('يرجى اختيار نوع التخصص');
+
+  const yr = parseFloat(document.getElementById('f-yrank').value);
+  const ys = parseFloat(document.getElementById('f-ysaudi').value);
+  const yd = parseFloat(document.getElementById('f-ydar').value);
+  const ts = parseFloat(document.getElementById('f-teach').value);
+  const sv = parseFloat(document.getElementById('f-serv').value);
+
+  if (isNaN(yr)||yr<0) errs.push('أدخل سنوات الخدمة في الرتبة الحالية');
+  if (isNaN(ys)||ys<0) errs.push('أدخل سنوات الخدمة في الجامعات السعودية');
+  if (isNaN(yd)||yd<0) errs.push('أدخل سنوات الخدمة في جامعة دار العلوم');
+  if (isNaN(ts)||ts<0||ts>25) errs.push('نقاط التدريس يجب أن تكون بين 0 و25');
+  if (isNaN(sv)||sv<0||sv>15) errs.push('نقاط الخدمة يجب أن تكون بين 0 و15');
+
+  const al = document.getElementById('pg1-alert');
+  al.innerHTML = '';
+  if (errs.length) {
+    al.innerHTML = `<div class="alert alert-err"><span>⚠️</span><div><strong>يرجى تصحيح الأخطاء التالية:</strong><br>• ${errs.join('<br>• ')}</div></div>`;
+    return;
+  }
+  refreshP2Info();
+  advance(2);
+}
+
+function refreshP2Info() {
+  const tgt = getTarget();
+  const req = REQS[tgt];
+  document.getElementById('req-text').innerHTML =
+    `متطلبات الترقية إلى رتبة <strong>${req.label}</strong>:
+     الحد الأدنى <strong>${req.minUnits} وحدات</strong> إجمالاً،
+     منها <strong>${req.minSolo} منفردة</strong> على الأقل،
+     و<strong>${req.minJournal} وحدة</strong> في مجلات علمية محكمة على الأقل.
+     التنوع الجغرافي: <strong>${req.minCountries} بلدان</strong>.`;
+}
+
+// ================================================================= VALIDATE P2
+function validateP2() {
+  const al = document.getElementById('pg2-alert');
+  al.innerHTML = '';
+  if (items.length === 0) {
+    al.innerHTML = '<div class="alert alert-err"><span>⚠️</span><div>يرجى إضافة إنتاج علمي واحد على الأقل قبل المتابعة.</div></div>';
+    return;
+  }
+  buildResults();
+  advance(3);
+}
+
+// ================================================================= ADD ITEM
+function addItem() {
+  itemCnt++;
+  const id = itemCnt;
+  items.push({id, type:'', title:'', journal:'', db:'', country:'', auth:'', status:'', year:'', units:0, solo:false, isJournal:false});
+
+  document.getElementById('empty-st').style.display = 'none';
+
+  const wrap = document.getElementById('items-wrap');
+  const div  = document.createElement('div');
+  div.id = `ri-${id}`;
+  div.className = 'ri';
+  div.innerHTML = buildItemHTML(id);
+  wrap.appendChild(div);
+  refreshStats();
+}
+
+function buildItemHTML(id) {
+  const typeOpts = TYPES.map(t=>`<option value="${t.v}">${t.icon} ${t.l}</option>`).join('');
+  const dbOpts   = DBS.map(d=>`<option value="${d.v}">${d.l}</option>`).join('');
+  const authBtns = Object.entries(AUTH_MAP).map(([k,v])=>
+    `<label class="ro" onclick="pickItemRad(this,'au-${id}',${id})"><input type="radio" name="au-${id}" value="${k}"> ${v.l}</label>`
+  ).join('');
+
+  return `
+    <div class="ri-head" onclick="togItem(${id})">
+      <div class="ri-title">
+        <span>📄</span>
+        <span id="it-ttl-${id}">إنتاج علمي #${id}</span>
+        <span id="it-tbadge-${id}" class="badge b-other" style="display:none;"></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span id="it-ubadge-${id}" class="unit-badge" style="display:none;"></span>
+        <span class="tog" id="tog-${id}">▼</span>
+      </div>
+    </div>
+    <div class="coll open" id="icoll-${id}">
+      <div class="ri-body">
+        <!-- Row 1 -->
+        <div class="fg2" style="margin-bottom:16px;">
+          <div class="fg">
+            <label class="lbl">نوع الإنتاج العلمي <span class="req">*</span></label>
+            <select id="it-type-${id}" onchange="onType(${id})">
+              <option value="">-- اختر النوع --</option>
+              ${typeOpts}
+            </select>
+          </div>
+          <div class="fg">
+            <label class="lbl">عنوان العمل <span class="req">*</span></label>
+            <input type="text" id="it-title-${id}" placeholder="أدخل عنوان البحث أو الكتاب" oninput="recompute(${id})">
+          </div>
+        </div>
+        <!-- Row 2 -->
+        <div class="fg2" style="margin-bottom:16px;" id="it-jrow-${id}">
+          <div class="fg">
+            <label class="lbl" id="it-jlbl-${id}">اسم المجلة / الجهة الناشرة <span class="req">*</span></label>
+            <input type="text" id="it-journal-${id}" placeholder="مثال: مجلة جامعة الملك سعود" oninput="recompute(${id})">
+          </div>
+          <div class="fg" id="it-dbgrp-${id}">
+            <label class="lbl">قاعدة البيانات / التصنيف <span class="req">*</span></label>
+            <select id="it-db-${id}" onchange="recompute(${id})">
+              <option value="">-- اختر التصنيف --</option>
+              ${dbOpts}
+            </select>
+          </div>
+        </div>
+        <!-- Row 3 -->
+        <div class="fg2" style="margin-bottom:16px;">
+          <div class="fg">
+            <label class="lbl">دولة المجلة / الناشر <span class="req">*</span></label>
+            <input type="text" id="it-country-${id}" placeholder="مثال: المملكة العربية السعودية" oninput="recompute(${id})">
+          </div>
+          <div class="fg">
+            <label class="lbl">سنة النشر / القبول <span class="req">*</span></label>
+            <input type="number" id="it-year-${id}" min="2000" max="2030" placeholder="مثال: 2023" oninput="recompute(${id})">
+          </div>
+        </div>
+        <!-- Status -->
+        <div class="fg" style="margin-bottom:16px;">
+          <label class="lbl">حالة الإنتاج <span class="req">*</span></label>
+          <div class="rg">
+            <label class="ro" onclick="pickItemRad(this,'st-${id}',${id})"><input type="radio" name="st-${id}" value="pub"> منشور</label>
+            <label class="ro" onclick="pickItemRad(this,'st-${id}',${id})"><input type="radio" name="st-${id}" value="acc"> مقبول للنشر (لم ينشر بعد)</label>
+          </div>
+        </div>
+        <!-- Authorship -->
+        <div class="fg" style="margin-bottom:16px;">
+          <label class="lbl">نوع المشاركة في التأليف <span class="req">*</span></label>
+          <div class="rg" style="flex-wrap:wrap;">${authBtns}</div>
+          <span class="hint" id="it-authhint-${id}"></span>
+        </div>
+        <!-- Units display -->
+        <div class="units-disp" id="it-udisp-${id}">
+          <span>الوحدات المحتسبة لهذا العمل:</span>
+          <span id="it-uval-${id}">--</span>
+        </div>
+        <div style="display:flex;justify-content:flex-end;">
+          <button class="btn btn-danger btn-sm" onclick="removeItem(${id})">🗑️ حذف هذا الإنتاج</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function togItem(id) {
+  const c = document.getElementById(`icoll-${id}`);
+  const h = document.querySelector(`#ri-${id} .ri-head`);
+  const t = document.getElementById(`tog-${id}`);
+  if (c.classList.contains('open')) { c.classList.replace('open','close'); h.classList.add('col-h'); }
+  else { c.classList.replace('close','open'); h.classList.remove('col-h'); }
+}
+
+function onType(id) {
+  const type = document.getElementById(`it-type-${id}`).value;
+  const lbl  = document.getElementById(`it-jlbl-${id}`);
+  const dbg  = document.getElementById(`it-dbgrp-${id}`);
+  if (['book','rare-book','translation','sci-body'].includes(type)) {
+    lbl.innerHTML = 'اسم الناشر / الجهة العلمية <span class="req">*</span>';
+    dbg.style.opacity = '.5';
+  } else if (type==='patent') {
+    lbl.innerHTML = 'مكتب براءات الاختراع <span class="req">*</span>';
+    dbg.style.opacity = '.5';
+  } else {
+    lbl.innerHTML = 'اسم المجلة / الجهة الناشرة <span class="req">*</span>';
+    dbg.style.opacity = '1';
+  }
+  recompute(id);
+}
+
+function recompute(id) {
+  const auth   = getItemRad(`au-${id}`);
+  const type   = document.getElementById(`it-type-${id}`).value;
+  const title  = document.getElementById(`it-title-${id}`).value.trim();
+  const journal= document.getElementById(`it-journal-${id}`).value.trim();
+  const db     = document.getElementById(`it-db-${id}`).value;
+  const country= document.getElementById(`it-country-${id}`).value.trim();
+  const status = getItemRad(`st-${id}`);
+  const year   = document.getElementById(`it-year-${id}`).value;
+
+  // units
+  let u = 0, isSolo=false;
+  if (auth) { u = AUTH_MAP[auth].u; isSolo = auth==='solo'; }
+
+  // hint
+  const hints = {
+    solo:'المؤلف المنفرد = وحدة كاملة (1.00)',
+    'two-co':'مشترك اثنان = نصف وحدة (0.50) لكل منهما',
+    'lead-multi':'الباحث الرئيس في مشاركة أكثر من اثنين = نصف وحدة (0.50)',
+    'co-multi':'المشارك (ليس رئيساً) في أكثر من اثنين = ربع وحدة (0.25)',
+  };
+  document.getElementById(`it-authhint-${id}`).textContent = auth ? hints[auth] : '';
+
+  // update display
+  document.getElementById(`it-uval-${id}`).textContent = u>0 ? u.toFixed(2)+' وحدة' : '--';
+  const tbadge = document.getElementById(`it-tbadge-${id}`);
+  const ubadge = document.getElementById(`it-ubadge-${id}`);
+  document.getElementById(`it-ttl-${id}`).textContent = title || `إنتاج علمي #${id}`;
+  if (type) {
+    const ti = TYPES.find(t=>t.v===type);
+    tbadge.textContent = ti ? ti.icon+' '+ti.l.split(' ').slice(1,3).join(' ') : type;
+    tbadge.className = `badge ${ti?ti.b:'b-other'}`;
+    tbadge.style.display = '';
+  }
+  if (u>0) { ubadge.textContent = u.toFixed(2)+' وحدة'; ubadge.style.display=''; }
+
+  // sync to array
+  const it = items.find(r=>r.id===id);
+  if (it) {
+    it.type=type; it.title=title; it.journal=journal;
+    it.db=db; it.country=country; it.auth=auth;
+    it.status=status; it.year=year; it.units=u;
+    it.solo=isSolo;
+    it.isJournal=['journal','res-center'].includes(type);
+  }
+  refreshStats();
+}
+
+function removeItem(id) {
+  document.getElementById(`ri-${id}`)?.remove();
+  items = items.filter(r=>r.id!==id);
+  if (!items.length) { document.getElementById('empty-st').style.display=''; document.getElementById('live-stats').style.display='none'; }
+  refreshStats();
+}
+
+function refreshStats() {
+  if (!items.length) return;
+  const n  = items.length;
+  const u  = items.reduce((s,r)=>s+r.units,0);
+  const so = items.filter(r=>r.solo).reduce((s,r)=>s+r.units,0);
+  const jn = items.filter(r=>r.isJournal).reduce((s,r)=>s+r.units,0);
+  document.getElementById('live-stats').style.display='';
+  document.getElementById('st-n').textContent = n;
+  document.getElementById('st-u').textContent = u.toFixed(2);
+  document.getElementById('st-s').textContent = so.toFixed(2);
+  document.getElementById('st-j').textContent = jn.toFixed(2);
+}
+
+// ================================================================= BUILD RESULTS
+function buildResults() {
+  const tgt    = getTarget();
+  const req    = REQS[tgt];
+  const spec   = getRad('sp');
+  const yr     = parseFloat(document.getElementById('f-yrank').value)||0;
+  const ys     = parseFloat(document.getElementById('f-ysaudi').value)||0;
+  const yd     = parseFloat(document.getElementById('f-ydar').value)||0;
+  const ts     = parseFloat(document.getElementById('f-teach').value)||0;
+  const sv     = parseFloat(document.getElementById('f-serv').value)||0;
+
+  const totU   = items.reduce((s,r)=>s+r.units,0);
+  const soloU  = items.filter(r=>r.solo).reduce((s,r)=>s+r.units,0);
+  const jrnU   = items.filter(r=>r.isJournal).reduce((s,r)=>s+r.units,0);
+
+  // Countries
+  const ctrs = [...new Set(items.map(r=>r.country.trim().toLowerCase()).filter(c=>c))];
+
+  // Max same outlet check (exclude WoS SCI)
+  const outletMap = {};
+  items.forEach(r=>{
+    const db = DBS.find(d=>d.v===r.db);
+    if (db && db.isWosSCI) return; // exempt
+    const k = (r.journal||'').trim().toLowerCase();
+    if (k) outletMap[k] = (outletMap[k]||0)+r.units;
+  });
+  const outletViol = Object.values(outletMap).some(u=>u>1);
+
+  // ARCIF only for humanities
+  const arcifViol = items.some(r=>r.db==='arcif') && spec!=='hum';
+
+  // Cap-limited types (conference, book, patent, etc.)
+  const capViol = [];
+  TYPES.forEach(t=>{
+    if (!t.cap) return;
+    const capItems = items.filter(r=>r.type===t.v);
+    const capU = capItems.reduce((s,r)=>s+r.units,0);
+    if (capU > t.cap) capViol.push(t.l + ` (المقبول: وحدة واحدة فقط، المُدخَل: ${capU.toFixed(2)})`);
+  });
+
+  // Estimate scientific score out of 60
+  let sciScore = 0;
+  items.forEach(r=>{
+    const db = DBS.find(d=>d.v===r.db);
+    const w  = db ? db.w : 0.7;
+    sciScore += r.units * w * (60/req.minUnits) * 0.88;
+  });
+  sciScore = Math.min(60, sciScore);
+
+  const stTotal    = ts + sv;
+  const estTotal   = Math.min(100, sciScore + ts + sv);
+
+  // ---- checks ----
+  const checks = [];
+  const ck = (lbl, detail, pass, warn=false) => checks.push({lbl,detail,pass,warn});
+
+  ck('مدة الخدمة في الرتبة الحالية',
+     `${yr} سنوات (المطلوب: 4 سنوات)`, yr>=4, yr>=3.5&&yr<4);
+  ck('مدة الخدمة في الجامعات السعودية',
+     `${ys} سنوات (المطلوب: سنة واحدة)`, ys>=1);
+  ck('مدة الخدمة في جامعة دار العلوم',
+     `${yd} سنة (المطلوب: سنة واحدة)`, yd>=1);
+  ck(`إجمالي الوحدات البحثية (الحد الأدنى: ${req.minUnits} وحدات)`,
+     `الوحدات المُدخَلة: ${totU.toFixed(2)} وحدة`, totU>=req.minUnits, totU>=req.minUnits*.8&&totU<req.minUnits);
+  ck(`الأعمال المنفردة (الحد الأدنى: ${req.minSolo} وحدات منفردة)`,
+     `الوحدات المنفردة: ${soloU.toFixed(2)} وحدة`, soloU>=req.minSolo);
+  ck(`النشر في مجلات محكمة (الحد الأدنى: ${req.minJournal} وحدة)`,
+     `وحدات المجلات المحكمة: ${jrnU.toFixed(2)} وحدة`, jrnU>=req.minJournal);
+  ck(`التنوع الجغرافي لأوعية النشر (${req.minCountries} بلدان على الأقل)`,
+     `بلدان النشر المُدخَلة: ${ctrs.length} (مجلات WoS-SCI/SSCI معفاة)`, ctrs.length>=req.minCountries, ctrs.length>=req.minCountries-1&&ctrs.length<req.minCountries);
+  ck(`نقاط التدريس والخدمة (الحد الأدنى: ${req.minServTeach} نقطة من 40)`,
+     `المجموع التقديري: ${stTotal} نقطة`, stTotal>=req.minServTeach);
+  ck(`نقاط الإنتاج العلمي (الحد الأدنى: ${req.minSciScore} نقطة من 60)`,
+     `التقدير المحتسب: ${sciScore.toFixed(1)} نقطة`, sciScore>=req.minSciScore, sciScore>=req.minSciScore*.9&&sciScore<req.minSciScore);
+  ck('المجموع الكلي (الحد الأدنى: 60 نقطة من 100)',
+     `المجموع التقديري: ${estTotal.toFixed(1)} نقطة`, estTotal>=60);
+  if (outletViol)
+    ck('تنوع أوعية النشر (المادة ٣١)', 'منفذ نشر واحد يتجاوز وحدة بحثية واحدة (خارج WoS-SCI)', false);
+  if (arcifViol)
+    ck('شروط قاعدة أرسيف (ARCIF)', 'أرسيف مقبولة للتخصصات الإنسانية فقط — تخصصك علمي/تقني', false);
+  capViol.forEach(c => ck('حد الوحدات المسموح به لنوع معين (المادة ٢٩)', c, false));
+
+  // eligibility
+  const hardFail = checks.filter(c=>!c.pass&&!c.warn);
+  const allPass  = hardFail.length===0;
+  const partial  = !allPass && hardFail.length<=2 && totU>=req.minUnits*.7;
+
+  // HERO
+  document.getElementById('r-hero').innerHTML = allPass
+    ? `<div class="result-hero r-eligible"><div class="rh-icon">🎉</div><h2 class="rh-title">مستوفٍ لمتطلبات الترقية</h2><p class="rh-sub">بناءً على بياناتك، أنت مستوفٍ للحد الأدنى المطلوب للتقدم للترقية إلى رتبة <strong>${req.label}</strong></p></div>`
+    : partial
+    ? `<div class="result-hero r-partial"><div class="rh-icon">⚠️</div><h2 class="rh-title">قريب من الاستيفاء — يحتاج مراجعة</h2><p class="rh-sub">توجد متطلبات لم تُستوفَ بالكامل للترقية إلى رتبة <strong>${req.label}</strong>. راجع التفاصيل أدناه.</p></div>`
+    : `<div class="result-hero r-ineligible"><div class="rh-icon">❌</div><h2 class="rh-title">غير مستوفٍ للمتطلبات حالياً</h2><p class="rh-sub">هناك متطلبات جوهرية لم تُستوفَ للترقية إلى رتبة <strong>${req.label}</strong>. يُوصى بمراجعة النقاط التفصيلية أدناه.</p></div>`;
+
+  // TOTAL
+  document.getElementById('r-total').textContent = estTotal.toFixed(0);
+
+  // STATS ROW
+  document.getElementById('r-stats').innerHTML = `
+    <div class="stat-c"><div class="stat-v" style="color:var(--primary);">${totU.toFixed(2)}</div><div class="stat-l">إجمالي الوحدات</div></div>
+    <div class="stat-c"><div class="stat-v" style="color:var(--secondary);">${soloU.toFixed(2)}</div><div class="stat-l">وحدات منفردة</div></div>
+    <div class="stat-c"><div class="stat-v" style="color:var(--accent);">${jrnU.toFixed(2)}</div><div class="stat-l">وحدات المجلات</div></div>
+    <div class="stat-c"><div class="stat-v" style="color:#7c3aed;">${ctrs.length}</div><div class="stat-l">دول النشر</div></div>`;
+
+  // BREAKDOWN
+  document.getElementById('r-breakdown').innerHTML = `
+    <div class="si">
+      <div class="si-head"><span class="si-lbl">📊 الإنتاج العلمي (الحد الأقصى: 60)</span><span class="si-val" style="color:var(--primary);">${sciScore.toFixed(1)} / 60</span></div>
+      <div class="sbar"><div class="sbar-fill sf-p" data-w="${(sciScore/60)*100}" style="width:0%"></div></div>
+      <p class="note">* تقدير احتسابي بناءً على الوحدات وجودة قواعد البيانات — يخضع لتقرير المحكمين</p>
+    </div>
+    <div class="si">
+      <div class="si-head"><span class="si-lbl">📚 التدريس (الحد الأقصى: 25)</span><span class="si-val" style="color:var(--accent);">${ts.toFixed(1)} / 25</span></div>
+      <div class="sbar"><div class="sbar-fill sf-a" data-w="${(ts/25)*100}" style="width:0%"></div></div>
+    </div>
+    <div class="si">
+      <div class="si-head"><span class="si-lbl">🤝 خدمة الجامعة والمجتمع (الحد الأقصى: 15)</span><span class="si-val" style="color:var(--secondary);">${sv.toFixed(1)} / 15</span></div>
+      <div class="sbar"><div class="sbar-fill sf-s" data-w="${(sv/15)*100}" style="width:0%"></div></div>
+    </div>
+    <div class="si">
+      <div class="si-head"><span class="si-lbl">🎯 المجموع الكلي</span><span class="si-val" style="color:${estTotal>=60?'var(--success)':'var(--danger)'};">${estTotal.toFixed(1)} / 100</span></div>
+      <div class="sbar"><div class="sbar-fill ${estTotal>=60?'sf-p':'sf-d'}" data-w="${estTotal}" style="width:0%"></div></div>
+    </div>`;
+
+  setTimeout(()=>{
+    document.querySelectorAll('.sbar-fill[data-w]').forEach(b=>{
+      b.style.width = b.dataset.w + '%';
+    });
+  }, 150);
+
+  // CHECKS
+  document.getElementById('r-checks').innerHTML = checks.map(c=>{
+    const cls  = c.pass?'chk-pass': c.warn?'chk-warn':'chk-fail';
+    const icon = c.pass?'✅': c.warn?'⚠️':'❌';
+    return `<div class="chk ${cls}"><span class="chk-icon">${icon}</span><div class="chk-text"><strong>${c.lbl}</strong><span>${c.detail}</span></div></div>`;
+  }).join('');
+
+  // TABLE
+  if (items.length) {
+    document.getElementById('r-table').innerHTML = `<div style="overflow-x:auto;"><table class="rt">
+      <thead><tr><th>#</th><th>العنوان</th><th>النوع</th><th>قاعدة البيانات</th><th>الدولة</th><th>المشاركة</th><th>الحالة</th><th>الوحدات</th></tr></thead>
+      <tbody>
+        ${items.map((r,i)=>{
+          const ti = TYPES.find(t=>t.v===r.type);
+          const di = DBS.find(d=>d.v===r.db);
+          const am = {solo:'منفرد','two-co':'مشترك ٢','lead-multi':'رئيس+','co-multi':'مشارك'};
+          return `<tr>
+            <td style="font-weight:800;color:var(--text-muted);">${i+1}</td>
+            <td style="font-weight:700;max-width:180px;">${r.title||'(بدون عنوان)'}</td>
+            <td>${ti?ti.icon+' '+ti.l.split(' ').slice(1,3).join(' '):'--'}</td>
+            <td>${di?di.l.split('—')[0].trim():'--'}</td>
+            <td>${r.country||'--'}</td>
+            <td>${am[r.auth]||'--'}</td>
+            <td><span style="padding:2px 8px;border-radius:10px;font-size:11px;${r.status==='pub'?'background:#dcfce7;color:#166534;':'background:#fef3c7;color:#92400e;'}">${r.status==='pub'?'منشور':r.status==='acc'?'مقبول':'--'}</span></td>
+            <td style="font-weight:900;color:var(--primary);font-size:15px;">${r.units.toFixed(2)}</td>
+          </tr>`;
+        }).join('')}
+        <tr style="background:var(--primary-light);">
+          <td colspan="7" style="font-weight:800;text-align:left;">الإجمالي</td>
+          <td style="font-weight:900;color:var(--primary);font-size:17px;">${totU.toFixed(2)}</td>
+        </tr>
+      </tbody>
+    </table></div>`;
+  }
+
+  // RECS
+  const recs = [];
+  if (totU<req.minUnits)  recs.push(`أضف <strong>${(req.minUnits-totU).toFixed(2)} وحدة</strong> بحثية إضافية (المطلوب: ${req.minUnits} وحدات — الحالي: ${totU.toFixed(2)})`);
+  if (soloU<req.minSolo)  recs.push(`أضف أعمالاً منفردة للوصول إلى <strong>${req.minSolo} وحدات منفردة</strong> (الحالي: ${soloU.toFixed(2)})`);
+  if (jrnU<req.minJournal) recs.push(`تأكد من وجود <strong>${req.minJournal} وحدات</strong> على الأقل في مجلات علمية محكمة (الحالي: ${jrnU.toFixed(2)})`);
+  if (ctrs.length<req.minCountries) recs.push(`وسّع تنوع أوعية النشر لتشمل <strong>${req.minCountries} بلدان</strong> مختلفة على الأقل (الحالي: ${ctrs.length})`);
+  if (yr<4) recs.push(`انتظر اكتمال <strong>4 سنوات</strong> في رتبتك الحالية (متبقٍّ: ${(4-yr).toFixed(1)} سنوات)`);
+  if (stTotal<req.minServTeach) recs.push(`ارفع نقاط التدريس والخدمة للوصول إلى <strong>${req.minServTeach} نقطة</strong> (الحالي: ${stTotal})`);
+  if (outletViol) recs.push('تجنب نشر أكثر من وحدة بحثية واحدة في منفذ نشر واحد (خارج مجلات WoS-SCI)');
+  if (arcifViol)  recs.push('أزل البحوث المدرجة في أرسيف (ARCIF) إذ تخصصك ليس إنسانياً/اجتماعياً');
+
+  document.getElementById('r-recs').innerHTML = recs.length
+    ? `<div class="score-sec"><h3>💡 توصيات لتحسين أهليتك</h3><div class="chk-list">${recs.map(r=>`<div class="chk chk-warn"><span class="chk-icon">💡</span><div class="chk-text">${r}</div></div>`).join('')}</div></div>`
+    : `<div class="score-sec"><h3>💡 ملاحظات إضافية</h3><div class="chk chk-pass"><span class="chk-icon">🌟</span><div class="chk-text"><strong>ممتاز! استوفيت جميع المتطلبات الأساسية</strong><span>يُنصح بمراجعة أمانة المجلس العلمي للتأكد من استيفاء كافة الإجراءات الرسمية قبل تقديم طلبك.</span></div></div></div>`;
+}
+</script>
+</body>
+</html>
